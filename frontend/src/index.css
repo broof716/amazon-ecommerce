@@ -37,21 +37,6 @@ footer {
   grid-area: footer;
   background-color: #203040;
   color: #ffffff;
-  font-size: 1.6rem;
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #f8f8f8;
-  cursor: pointer;
-}
-button.primary {
-  background-color: #f0c040;
-}
-button.block {
-  width: 100%;
-}
-button:hover {
-  border: 0.1rem #404040 solid;
 }
 /* Common */
 h1 {
@@ -80,7 +65,23 @@ button {
   padding: 1rem;
   border-radius: 0.5rem;
   border: 0.1rem #a4a4a4 solid;
+  font-size: 1.6rem;
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8f8f8;
+  cursor: pointer;
 }
+button:hover {
+  border: 0.1rem #404040 solid;
+}
+button.primary {
+  background-color: #f0c040;
+}
+button.block {
+  width: 100%;
+}
+
 /* Header */
 header a {
   color: #ffffff;
