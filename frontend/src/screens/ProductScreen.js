@@ -7,10 +7,10 @@ export default function ProductScreen(props) {
   if(!product){
     return <div> Product Not Found </div>
   }
-  return <div>
+  return ( <div>
     <div className="row">
       <div className="col-2">
-        <img className="large" src={Product.image} alt={product.name} ></img>
+        <img className="large" src={product.image} alt={product.name} ></img>
       </div>
       <div className="col-1">
         <ul>
@@ -18,7 +18,7 @@ export default function ProductScreen(props) {
             <h1>{product.name}</h1>
           </li>
           <li>
-            <Rating
+            <Rating 
               rating={product.rating}
               numReviews={product.numReviews}
             ></Rating>
@@ -42,17 +42,21 @@ export default function ProductScreen(props) {
               <div className="row">
                 <div>Status</div>
                 <div>
-                  {product.countInStock> 0 ? (
-                    <span className="success"> InStock </span>
+                  {product.countInStock > 0 ? ( 
+                    <span className="success">Stock</span>
                   ) : (
                   <span className="error">Unavailable</span>
                   )}
                 </div>
               </div>
             </li>
+            <li>
+              <button className="primary block">Add to Cart</button>
+            </li>
           </ul>
         </div>
       </div>
     </div>
-  </div>;
+  </div>
+  );
 }
