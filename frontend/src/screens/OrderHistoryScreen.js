@@ -1,11 +1,16 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ListOrderMine } from '../actions/orderActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 
 export default function OrderHistoryScreen(props) {
   const orderMineList = useSelector(state => state.orderMineList);
   const { loading, error, orders } = orderMineList;
+  const dispatch = useDispatch();
+  useEffect(() =>{
+    dispatch(ListOrderMine());
+  }, [dispatch]);
   return (
     <div>
       <h1>Order History</h1>   
@@ -29,9 +34,9 @@ export default function OrderHistoryScreen(props) {
             {orders.map((order) => (
               <tr key={order._id}>
                 <td>{order._id}</td>
-                <td>{order._createdAt.substring(0, 10)}</td>
-                <td>{order._totalPrice}</td>
-                <td>{order._isPaid? order.paidAt.substring(0, 10): 'No'}</td>
+                <td>{order.createdAt.substring(0, 10)}</td>
+                <td>{order.totalPrice}</td>
+                <td>{order.isPaid? order.paidAt.substring(0, 10): 'No'}</td>
                 <td>
                   {order._isDelivered
                     ? order.deliveredAt.substring(0, 10)
