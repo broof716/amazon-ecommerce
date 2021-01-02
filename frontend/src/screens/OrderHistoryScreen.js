@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 
-export default function OrderHistoryScreen() {
+export default function OrderHistoryScreen(props) {
   const orderMineList = useSelector(state => state.orderMineList);
   const { loading, error, orders } = orderMineList;
   return (
@@ -25,6 +25,32 @@ export default function OrderHistoryScreen() {
               <th>ACTIONS</th>
             </tr>
           </thead>
+          <tbody>
+            {orders.map((order) => (
+              <tr key={order._id}>
+                <td>{order._id}</td>
+                <td>{order._createdAt.substring(0, 10)}</td>
+                <td>{order._totalPrice}</td>
+                <td>{order._isPaid? order.paidAt.substring(0, 10): 'No'}</td>
+                <td>
+                  {order._isDelivered
+                    ? order.deliveredAt.substring(0, 10)
+                    : 'No'}
+                </td>
+                <td>
+                  <button
+                    type="button" 
+                    className="small"
+                    onClick={() => {
+                      props.history.push(`/order/${order._id}`);
+                    }}
+                  >
+                    Details
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       )}
     </div>
