@@ -20,5 +20,5 @@ export default function Product(props) {
       <div className="price">${product.price}</div>
     </div>
   </div>
-  )
+  );
 }

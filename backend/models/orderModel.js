@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
-const orderSchema = new mongoose.Schema({
+const orderSchema = new mongoose.Schema(
+  {
   orderItems: [
     {
       name: { type: String, required: true },
@@ -37,7 +38,8 @@ const orderSchema = new mongoose.Schema({
   paidAt: { type: Date },
   isDelivered: { type: Boolean, default: false },
   deliveredAt: { type: Date },
-}, {
+}, 
+{
   timestamps: true,
   }
 );
