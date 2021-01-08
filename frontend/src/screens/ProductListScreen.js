@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../actions/productActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import Product from '../components/Product';
+
 
 export default function ProductListScreen(props) {
   const productList = useSelector(state => state.productList);
@@ -11,7 +11,7 @@ export default function ProductListScreen(props) {
 const dispatch = useDispatch();
   useEffect(() => {
     dispatch(listProducts());
-  });
+  }, [dispatch]);
   const deleteHandler = () => {
     /// TODO: dispatch delete action
   }
@@ -36,7 +36,7 @@ const dispatch = useDispatch();
           </thead>
           <tbody>
             {products.map((product) => (
-              <tr key={Product._id}>
+              <tr key={product._id}>
                 <td>{product._id}</td>
                 <td>{product.name}</td>
                 <td>{product.price}</td>
