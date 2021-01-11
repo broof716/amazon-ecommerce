@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { detailsProduct } from '../actions/productActions';
+import { detailsProduct, updateProduct } from '../actions/productActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 
@@ -33,7 +33,19 @@ export default function ProductEditScreen(props) {
   const submitHandler = (e) => {
     e.preventDefault();
     // TODO dispatch update product
-  }
+    dispatch(
+      updateProduct({
+        _id: productId,
+        name, 
+        price, 
+        image, 
+        category, 
+        brand, 
+        countInStock, 
+        description,
+      })
+    );
+  };
   return (
     <div>
       <form className="form" onSubmit={submitHandler}>
