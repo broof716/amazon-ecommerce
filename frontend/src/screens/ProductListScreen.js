@@ -1,36 +1,55 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createProduct, listProducts } from '../actions/productActions';
+import {
+  createProduct,
+  deleteProduct,
+  listProducts,
+} from '../actions/productActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import { PRODUCT_CREATE_RESET } from '../constants/productConstants';
-
+import {
+  PRODUCT_CREATE_RESET,
+  PRODUCT_DELETE_RESET,
+} from '../constants/productConstants';
 
 export default function ProductListScreen(props) {
-  const productList = useSelector(state => state.productList);
+  const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
-
-  const productCreate = useSelector(state => state.productCreate);
-  const { 
-    loading: loadingCreate, 
-    error: errorCreate, 
-    success: successCreate, 
+  const productCreate = useSelector((state) => state.productCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
     product: createdProduct,
   } = productCreate;
+
+  const productDelete = useSelector((state) => state.productDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = productDelete;
+
   const dispatch = useDispatch();
   useEffect(() => {
-    if(successCreate) {
+    if (successCreate) {
       dispatch({ type: PRODUCT_CREATE_RESET });
       props.history.push(`/product/${createdProduct._id}/edit`);
     }
+    if (successDelete) {
+      dispatch({ type: PRODUCT_DELETE_RESET });
+    }
     dispatch(listProducts());
-  }, [createdProduct, dispatch, props.history, successCreate]);
-  const deleteHandler = () => {
-    /// TODO: dispatch delete action
+  }, [createdProduct, dispatch, props.history, successCreate, successDelete]);
+
+  const deleteHandler = (product) => {
+    if (window.confirm('Are you sure to delete?')) {
+      dispatch(deleteProduct(product._id));
+    }
   };
   const createHandler = () => {
     dispatch(createProduct());
-  }
+  };
   return (
     <div>
       <div className="row">
@@ -39,12 +58,16 @@ export default function ProductListScreen(props) {
           Create Product
         </button>
       </div>
-      { loadingCreate && <LoadingBox></LoadingBox>}
-      { errorCreate && <MessageBox variant="danger">{errorCreate}</MessageBox>}
+
+      {loadingDelete && <LoadingBox></LoadingBox>}
+      {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
+
+      {loadingCreate && <LoadingBox></LoadingBox>}
+      {errorCreate && <MessageBox variant="danger">{errorCreate}</MessageBox>}
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
-      <MessageBox variant="danger">{error}</MessageBox>
+        <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <table className="table">
           <thead>
@@ -66,12 +89,20 @@ export default function ProductListScreen(props) {
                 <td>{product.category}</td>
                 <td>{product.brand}</td>
                 <td>
-                  <button type="button" className="small"
-                  onClick={() => props.history.push(`/product/${product._id}/edit`)}>
+                  <button
+                    type="button"
+                    className="small"
+                    onClick={() =>
+                      props.history.push(`/product/${product._id}/edit`)
+                    }
+                  >
                     Edit
                   </button>
-                  <button type="button" className="small"
-                  onClick={() => deleteHandler(product)}>
+                  <button
+                    type="button"
+                    className="small"
+                    onClick={() => deleteHandler(product)}
+                  >
                     Delete
                   </button>
                 </td>
@@ -81,5 +112,5 @@ export default function ProductListScreen(props) {
         </table>
       )}
     </div>
-  )
+  );
 }
