@@ -1,2 +1,5 @@
 .vscode/.env
 /uplaods/*.jpg
+
+# Local Netlify folder
+.netlify
