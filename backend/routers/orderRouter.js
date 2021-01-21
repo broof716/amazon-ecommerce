@@ -2,7 +2,6 @@ import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import Order from '../models/orderModel.js';
 import { isAdmin, isAuth } from '../utils.js';
-
 const orderRouter = express.Router();
 orderRouter.get(
   '/',
@@ -21,7 +20,6 @@ orderRouter.get(
     res.send(orders);
   })
 );
-
 orderRouter.post(
   '/',
   isAuth,
@@ -30,7 +28,6 @@ orderRouter.post(
       res.status(400).send({ message: 'Cart is empty' });
     } else {
       const order = new Order({
-        seller: req.body.orderItems[0].seller,
         orderItems: req.body.orderItems,
         shippingAddress: req.body.shippingAddress,
         paymentMethod: req.body.paymentMethod,
@@ -47,7 +44,6 @@ orderRouter.post(
     }
   })
 );
-
 orderRouter.get(
   '/:id',
   isAuth,
@@ -60,7 +56,6 @@ orderRouter.get(
     }
   })
 );
-
 orderRouter.put(
   '/:id/pay',
   isAuth,
@@ -82,7 +77,6 @@ orderRouter.put(
     }
   })
 );
-
 orderRouter.delete(
   '/:id',
   isAuth,
@@ -93,7 +87,7 @@ orderRouter.delete(
       const deleteOrder = await order.remove();
       res.send({ message: 'Order Deleted', order: deleteOrder });
     } else {
-      res.status(404).send({ message: 'Order Not Found'});
+      res.status(404).send({ message: 'Order Not Found' });
     }
   })
 );
