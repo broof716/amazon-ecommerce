@@ -91,7 +91,7 @@ isAuth,
 isAdmin,
 expressAsyncHandler(async (req, res) => {
   const users = await User.find({});
-  res.send(users)
+  res.send(users);
 })
 )
 export default userRouter;
