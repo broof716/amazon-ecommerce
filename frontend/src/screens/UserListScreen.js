@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { listUsers } from '../actions/userActions';
+import { deleteUser, listUsers } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox'
 import MessageBox from '../components/MessageBox'
 
@@ -11,6 +11,11 @@ export default function UserListScreen() {
   useEffect(() => {
     dispatch(listUsers());
   }, [dispatch])
+  const deleteHandler = (user) => {
+    if(window.confirm('Are you sure?')) {
+      dispatch(deleteUser(user._id));
+    }
+  }
   return (
     <div>
       <h1>Users</h1>
@@ -41,7 +46,7 @@ export default function UserListScreen() {
                     <td>{user.isAdmin ? 'YES' : 'NO'}</td>
                     <td>
                       <button>Edit</button>
-                      <button>Delete</button>
+                      <button type="button" className="small" onClick={() => deleteHandler(user)}>Delete</button>
                     </td>
                   </tr>
                 ))
