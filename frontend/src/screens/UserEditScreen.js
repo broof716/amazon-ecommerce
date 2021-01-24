@@ -1,3 +1,4 @@
+import { set } from 'mongoose';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { detailsUser } from '../actions/userActions';
@@ -18,6 +19,11 @@ export default function UserEditScreen(props) {
   useEffect(() => {
     if(!user) {
       dispatch(detailsUser(userId));
+    } else {
+      setName(user.name);
+      setEmail(user.email);
+      setIsSeller(user.isSeller);
+      setIsAdmin(user.isAdmin);
     }
   }, [dispatch, user, userId])
 
