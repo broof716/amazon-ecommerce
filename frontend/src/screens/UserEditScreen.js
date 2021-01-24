@@ -1,12 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { detailsUser } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox'
 import MessageBox from '../components/MessageBox'
 
-export default function UserEditScreen() {
+export default function UserEditScreen(props) {
+  const userId = props.match.params.id;
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [isSeller, setIsSeller] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+
+  const userDetails = useSelector(state => state.userDetails);
+  const { loading, error, user } = userDetails;
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if(!user) {
+      dispatch(detailsUser(userId));
+    }
+  }, [dispatch, user, userId])
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -18,7 +31,7 @@ export default function UserEditScreen() {
         <div>
           <h1>Edit User {name}</h1>
         </div>
-        {laoding ? (
+        {loading ? (
           <LoadingBox></LoadingBox>
         ) : error ? ( 
           <MessageBox variant="danger">{error}</MessageBox>
