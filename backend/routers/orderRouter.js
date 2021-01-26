@@ -8,7 +8,9 @@ orderRouter.get(
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
-    const orders = await Order.find({}).populate('user', 'name');
+    const seller = req.query.seller || '';
+    const sellerFilter = seller ? { seller } : {};
+    const orders = await Order.find({...sellerFilter}).populate('user', 'name');
     res.send(orders);
   })
 );
@@ -28,6 +30,7 @@ orderRouter.post(
       res.status(400).send({ message: 'Cart is empty' });
     } else {
       const order = new Order({
+        seller: req.body.orderItems[0].seller,
         orderItems: req.body.orderItems,
         shippingAddress: req.body.shippingAddress,
         paymentMethod: req.body.paymentMethod,
