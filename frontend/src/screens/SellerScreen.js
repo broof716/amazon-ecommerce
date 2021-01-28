@@ -1,20 +1,21 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../actions/productActions';
 import { detailsUser } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import Product from '../components/Product';
 import Rating from '../components/Rating';
 
 export default function SellerScreen(props) {
   const sellerId = props.match.params.id;
-  const userDetails = useSelector(state => state.userDetails);
+  const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
 
-  const productList = useSelector(state => state.productList);
-  const { 
-    loading: loadingProducts, 
-    error: errorProducts, 
+  const productList = useSelector((state) => state.productList);
+  const {
+    loading: loadingProducts,
+    error: errorProducts,
     products,
   } = productList;
 
@@ -28,24 +29,28 @@ export default function SellerScreen(props) {
       <div className="col-1">
         {loading ? (
           <LoadingBox></LoadingBox>
-        )  : error ? ( 
+        ) : error ? (
           <MessageBox variant="danger">{error}</MessageBox>
         ) : (
           <ul className="card card-body">
             <li>
-              <div className="row">
-                <div>
-                  <img src={user.seller.logo} alt={user.seller.name}></img>
+              <div className="row start">
+                <div className="p-1">
+                  <img
+                    className="small"
+                    src={user.seller.logo}
+                    alt={user.seller.name}
+                  ></img>
                 </div>
-                <div>
+                <div className="p-1">
                   <h1>{user.seller.name}</h1>
                 </div>
               </div>
             </li>
             <li>
-              <Rating 
-                value={user.seller.rating} 
-                text={`${user.seller.numReviews} reviews`}
+              <Rating
+                rating={user.seller.rating}
+                numReviews={user.seller.numReviews}
               ></Rating>
             </li>
             <li>
@@ -56,7 +61,20 @@ export default function SellerScreen(props) {
         )}
       </div>
       <div className="col-3">
-
+        {loadingProducts ? (
+          <LoadingBox></LoadingBox>
+        ) : errorProducts ? (
+          <MessageBox variant="danger">{errorProducts}</MessageBox>
+        ) : (
+          <>
+            {products.length === 0 && <MessageBox>No Product Found</MessageBox>}
+            <div className="row center">
+              {products.map((product) => (
+                <Product key={product._id} product={product}></Product>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
