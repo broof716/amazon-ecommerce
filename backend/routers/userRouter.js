@@ -4,7 +4,19 @@ import bcrypt from 'bcryptjs';
 import data from '../data.js';
 import User from '../models/userModel.js';
 import { generateToken, isAdmin, isAuth } from '../utils.js';
+
 const userRouter = express.Router();
+
+userRouter.get(
+  '/top-sellers',
+  expressAsyncHandler(async (req, res) => {
+    const topSellers = await User.find({ isSeller: true })
+      .sort({ 'seller.rating': -1 })
+      .limit(3);
+    res.send(topSellers);
+  })
+);
+
 userRouter.get(
   '/seed',
   expressAsyncHandler(async (req, res) => {
@@ -13,6 +25,7 @@ userRouter.get(
     res.send({ createdUsers });
   })
 );
+
 userRouter.post(
   '/signin',
   expressAsyncHandler(async (req, res) => {
@@ -33,6 +46,7 @@ userRouter.post(
     res.status(401).send({ message: 'Invalid email or password' });
   })
 );
+
 userRouter.post(
   '/register',
   expressAsyncHandler(async (req, res) => {
@@ -52,6 +66,7 @@ userRouter.post(
     });
   })
 );
+
 userRouter.get(
   '/:id',
   expressAsyncHandler(async (req, res) => {
@@ -92,6 +107,7 @@ userRouter.put(
     }
   })
 );
+
 userRouter.get(
   '/',
   isAuth,
@@ -101,6 +117,7 @@ userRouter.get(
     res.send(users);
   })
 );
+
 userRouter.delete(
   '/:id',
   isAuth,
@@ -119,6 +136,7 @@ userRouter.delete(
     }
   })
 );
+
 userRouter.put(
   '/:id',
   isAuth,
@@ -128,8 +146,9 @@ userRouter.put(
     if (user) {
       user.name = req.body.name || user.name;
       user.email = req.body.email || user.email;
-      user.isSeller = req.body.isSeller || user.isSeller;
-      user.isAdmin = req.body.isAdmin || user.isAdmin;
+      user.isSeller = Boolean(req.body.isSeller);
+      user.isAdmin = Boolean(req.body.isAdmin);
+      // user.isAdmin = req.body.isAdmin || user.isAdmin;
       const updatedUser = await user.save();
       res.send({ message: 'User Updated', user: updatedUser });
     } else {
@@ -137,4 +156,5 @@ userRouter.put(
     }
   })
 );
+
 export default userRouter;
