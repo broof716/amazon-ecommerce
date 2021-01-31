@@ -4,24 +4,24 @@ import { BrowserRouter, Link, Route } from 'react-router-dom';
 import { signout } from './actions/userActions';
 import AdminRoute from './components/AdminRoute';
 import PrivateRoute from './components/PrivateRoute';
-import SellerRoute from './components/SellerRoute';
 import CartScreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
-import OrderListScreen from './screens/OrderListScreen';
 import OrderScreen from './screens/OrderScreen';
 import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
-import ProductEditScreen from './screens/ProductEditScreen';
 import ProductListScreen from './screens/ProductListScreen';
 import ProductScreen from './screens/ProductScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
-import SellerScreen from './screens/SellerScreen';
 import ShippingAddressScreen from './screens/ShippingAddressScreen';
 import SigninScreen from './screens/SigninScreen';
-import UserEditScreen from './screens/UserEditScreen';
+import ProductEditScreen from './screens/ProductEditScreen';
+import OrderListScreen from './screens/OrderListScreen';
 import UserListScreen from './screens/UserListScreen';
+import UserEditScreen from './screens/UserEditScreen';
+import SellerRoute from './components/SellerRoute';
+import SellerScreen from './screens/SellerScreen';
 
 function App() {
   const cart = useSelector((state) => state.cart);
@@ -112,7 +112,11 @@ function App() {
           <Route path="/seller/:id" component={SellerScreen}></Route>
           <Route path="/cart/:id?" component={CartScreen}></Route>
           <Route path="/product/:id" component={ProductScreen} exact></Route>
-          <Route path="/product/:id/edit" component={ProductEditScreen} exact></Route>
+          <Route
+            path="/product/:id/edit"
+            component={ProductEditScreen}
+            exact
+          ></Route>
           <Route path="/signin" component={SigninScreen}></Route>
           <Route path="/register" component={RegisterScreen}></Route>
           <Route path="/shipping" component={ShippingAddressScreen}></Route>
@@ -124,25 +128,27 @@ function App() {
             path="/profile"
             component={ProfileScreen}
           ></PrivateRoute>
-          <AdminRoute 
+          <AdminRoute
             path="/productlist"
-            component={ProductListScreen} exact
+            component={ProductListScreen}
+            exact
           ></AdminRoute>
-          <AdminRoute 
+          <AdminRoute
             path="/orderlist"
-            component={OrderListScreen} exact
+            component={OrderListScreen}
+            exact
           ></AdminRoute>
           <AdminRoute path="/userlist" component={UserListScreen}></AdminRoute>
-          <AdminRoute 
-            path="/user/:id/edit" 
+          <AdminRoute
+            path="/user/:id/edit"
             component={UserEditScreen}
           ></AdminRoute>
-          <SellerRoute 
-            path="/productlist/seller" 
+          <SellerRoute
+            path="/productlist/seller"
             component={ProductListScreen}
           ></SellerRoute>
-          <SellerRoute 
-            path="/orderlist/seller" 
+          <SellerRoute
+            path="/orderlist/seller"
             component={OrderListScreen}
           ></SellerRoute>
           <Route path="/" component={HomeScreen} exact></Route>

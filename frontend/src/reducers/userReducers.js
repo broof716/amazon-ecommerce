@@ -29,6 +29,7 @@ import {
   USER_UPDATE_RESET,
   USER_UPDATE_SUCCESS,
 } from '../constants/userConstants';
+
 export const userRegisterReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_REGISTER_REQUEST:
@@ -97,7 +98,7 @@ export const userUpdateReducer = (state = {}, action) => {
       return state;
   }
 };
-export const userListReducer = (state = {loading: true}, action) => {
+export const userListReducer = (state = { loading: true }, action) => {
   switch (action.type) {
     case USER_LIST_REQUEST:
       return { loading: true };
@@ -109,7 +110,7 @@ export const userListReducer = (state = {loading: true}, action) => {
       return state;
   }
 };
-export const userDeleteReducer = (state = { }, action) => {
+export const userDeleteReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_DELETE_REQUEST:
       return { loading: true };
@@ -123,7 +124,7 @@ export const userDeleteReducer = (state = { }, action) => {
       return state;
   }
 };
-export const userTopSellerListReducer = (state = {loading: true}, action) => {
+export const userTopSellerListReducer = (state = { loading: true }, action) => {
   switch (action.type) {
     case USER_TOPSELLERS_LIST_REQUEST:
       return { loading: true };
