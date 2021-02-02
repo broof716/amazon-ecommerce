@@ -1,3 +1,4 @@
+
 import Axios from 'axios';
 import {
   PRODUCT_CREATE_FAIL,
@@ -73,7 +74,6 @@ export const detailsProduct = (productId) => async (dispatch) => {
     });
   }
 };
-
 export const createProduct = () => async (dispatch, getState) => {
   dispatch({ type: PRODUCT_CREATE_REQUEST });
   const {
@@ -99,7 +99,6 @@ export const createProduct = () => async (dispatch, getState) => {
     dispatch({ type: PRODUCT_CREATE_FAIL, payload: message });
   }
 };
-
 export const updateProduct = (product) => async (dispatch, getState) => {
   dispatch({ type: PRODUCT_UPDATE_REQUEST, payload: product });
   const {
@@ -118,7 +117,6 @@ export const updateProduct = (product) => async (dispatch, getState) => {
     dispatch({ type: PRODUCT_UPDATE_FAIL, error: message });
   }
 };
-
 export const deleteProduct = (productId) => async (dispatch, getState) => {
   dispatch({ type: PRODUCT_DELETE_REQUEST, payload: productId });
   const {
@@ -137,7 +135,6 @@ export const deleteProduct = (productId) => async (dispatch, getState) => {
     dispatch({ type: PRODUCT_DELETE_FAIL, payload: message });
   }
 };
-
 export const createReview = (productId, review) => async (
   dispatch,
   getState
