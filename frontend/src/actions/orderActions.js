@@ -23,6 +23,7 @@ import {
   ORDER_DELIVER_SUCCESS,
   ORDER_DELIVER_FAIL,
 } from '../constants/orderConstants';
+
 export const createOrder = (order) => async (dispatch, getState) => {
   dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
   try {
@@ -47,6 +48,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
     });
   }
 };
+
 export const detailsOrder = (orderId) => async (dispatch, getState) => {
   dispatch({ type: ORDER_DETAILS_REQUEST, payload: orderId });
   const {
@@ -65,6 +67,7 @@ export const detailsOrder = (orderId) => async (dispatch, getState) => {
     dispatch({ type: ORDER_DETAILS_FAIL, payload: message });
   }
 };
+
 export const payOrder = (order, paymentResult) => async (
   dispatch,
   getState
@@ -143,6 +146,7 @@ export const deleteOrder = (orderId) => async (dispatch, getState) => {
     dispatch({ type: ORDER_DELETE_FAIL, payload: message });
   }
 };
+
 export const deliverOrder = (orderId) => async (dispatch, getState) => {
   dispatch({ type: ORDER_DELIVER_REQUEST, payload: orderId });
   const {
